@@ -1,4 +1,5 @@
 import json
+from urllib import parse
 # import collections
 
 # from http.server import HTTPServer, SimpleHTTPRequestHandler
@@ -19,6 +20,9 @@ def on_reload():
     # books_path = Path.joinpath(Path.cwd().parents[0], 'Book-parser/', 'about_books.json')
     with open('about_books.json', 'r', encoding='utf-8') as json_file:
         books = json.load(json_file)
+
+    for book in books:
+        book['book_path'] = parse.quote(book['book_path'], safe='/')
 
     # books_set = collections.defaultdict(list)
     rendered_page = template.render(
