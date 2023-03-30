@@ -1,12 +1,16 @@
 import json
-from urllib import parse
-# import collections
 
-# from http.server import HTTPServer, SimpleHTTPRequestHandler
-# from environs import Env
+from urllib import parse
+from more_itertools import chunked
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pathlib import Path
 from livereload import Server
+
+# from http.server import HTTPServer, SimpleHTTPRequestHandler
+# from environs import Env
+
+
+PAGE_DIRECTORY = 'Pages'
 
 
 def on_reload():
@@ -21,16 +25,20 @@ def on_reload():
     with open('about_books.json', 'r', encoding='utf-8') as json_file:
         books = json.load(json_file)
 
+    # print(Path.cwd().joinpath('Books/239.%D0%90%D0%BB%D0%B8%D0%B1%D0%B8.txt'))
+    # exit()
+
     for book in books:
         book['book_path'] = parse.quote(book['book_path'], safe='/')
 
-    # books_set = collections.defaultdict(list)
-    rendered_page = template.render(
-        books=books
-    )
-
-    with open('index.html', 'w', encoding="utf8") as file:
-        file.write(rendered_page)
+    Path(PAGE_DIRECTORY).mkdir(parents=True, exist_ok=True)
+    books = list(chunked(books, 20))
+    for page_number, books_page in enumerate(books):
+        rendered_page = template.render(
+            books=books[page_number]
+        )
+        with open(Path(PAGE_DIRECTORY).joinpath(f'index{page_number+1}.html'), 'w', encoding="utf8") as file:
+            file.write(rendered_page)
 
     # server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
     # server.serve_forever()
