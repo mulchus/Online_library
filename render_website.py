@@ -25,17 +25,15 @@ def on_reload():
     with open('about_books.json', 'r', encoding='utf-8') as json_file:
         books = json.load(json_file)
 
-    # print(Path.cwd().joinpath('Books/239.%D0%90%D0%BB%D0%B8%D0%B1%D0%B8.txt'))
-    # exit()
-
     for book in books:
-        book['book_path'] = parse.quote(book['book_path'], safe='/')
+        book['book_path'] = parse.quote(book['book_path'], safe='/')  # заменяем в пути пробелы
 
     Path(PAGE_DIRECTORY).mkdir(parents=True, exist_ok=True)
     books = list(chunked(books, 20))
     for page_number, books_page in enumerate(books):
         rendered_page = template.render(
-            books=books[page_number]
+            books=books[page_number],
+            pages_number=len(books)
         )
         with open(Path(PAGE_DIRECTORY).joinpath(f'index{page_number+1}.html'), 'w', encoding="utf8") as file:
             file.write(rendered_page)
