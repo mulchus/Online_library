@@ -16,8 +16,8 @@ def on_reload():
 
     template = env.get_template('template.html')
 
-    books_path = Path.joinpath(Path.cwd().parents[0], 'Book-parser/', 'about_books.json')
-    with open(books_path, 'r', encoding='utf-8') as json_file:
+    # books_path = Path.joinpath(Path.cwd().parents[0], 'Book-parser/', 'about_books.json')
+    with open('about_books.json', 'r', encoding='utf-8') as json_file:
         books = json.load(json_file)
 
     # books_set = collections.defaultdict(list)
