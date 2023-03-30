@@ -33,7 +33,8 @@ def on_reload():
     for page_number, books_page in enumerate(books):
         rendered_page = template.render(
             books=books[page_number],
-            pages_number=len(books)
+            pages_number=len(books),
+            page_number=page_number
         )
         with open(Path(PAGE_DIRECTORY).joinpath(f'index{page_number+1}.html'), 'w', encoding="utf8") as file:
             file.write(rendered_page)
