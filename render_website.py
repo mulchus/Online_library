@@ -8,6 +8,7 @@ from livereload import Server
 
 
 PAGE_DIRECTORY = 'pages'
+BOOKS_PER_PAGE = 40
 
 
 def on_reload():
@@ -25,7 +26,7 @@ def on_reload():
         book['book_path'] = parse.quote(book['book_path'], safe='/')  # заменяем в пути пробелы
 
     Path(PAGE_DIRECTORY).mkdir(parents=True, exist_ok=True)
-    books = list(chunked(books, 40))
+    books = list(chunked(books, BOOKS_PER_PAGE))
     for page_number, books_page in enumerate(books):
         rendered_page = template.render(
             books=books[page_number],
