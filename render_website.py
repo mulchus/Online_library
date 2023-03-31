@@ -6,11 +6,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pathlib import Path
 from livereload import Server
 
-# from http.server import HTTPServer, SimpleHTTPRequestHandler
-# from environs import Env
 
-
-PAGE_DIRECTORY = 'Pages'
+PAGE_DIRECTORY = 'pages'
 
 
 def on_reload():
@@ -21,8 +18,7 @@ def on_reload():
 
     template = env.get_template('template.html')
 
-    # books_path = Path.joinpath(Path.cwd().parents[0], 'Book-parser/', 'about_books.json')
-    with open('about_books.json', 'r', encoding='utf-8') as json_file:
+    with open(Path('media').joinpath('about_books.json'), 'r', encoding='utf-8') as json_file:
         books = json.load(json_file)
 
     for book in books:
@@ -38,9 +34,6 @@ def on_reload():
         )
         with open(Path(PAGE_DIRECTORY).joinpath(f'index{page_number+1}.html'), 'w', encoding="utf8") as file:
             file.write(rendered_page)
-
-    # server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
-    # server.serve_forever()
 
 
 def main():
