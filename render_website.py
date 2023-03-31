@@ -29,7 +29,7 @@ def on_reload():
         book['book_path'] = parse.quote(book['book_path'], safe='/')  # заменяем в пути пробелы
 
     Path(PAGE_DIRECTORY).mkdir(parents=True, exist_ok=True)
-    books = list(chunked(books, 20))
+    books = list(chunked(books, 40))
     for page_number, books_page in enumerate(books):
         rendered_page = template.render(
             books=books[page_number],
