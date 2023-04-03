@@ -2,7 +2,6 @@ import json
 import argparse
 import sys
 
-from urllib import parse
 from more_itertools import chunked
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pathlib import Path
@@ -35,9 +34,6 @@ def on_reload():
         sys.exit(f'Неверно указан путь или имя файлаю Ошибка {error}')
 
     template = env.get_template('template.html')
-
-    for book_description in books_description:
-        book_description['book_path'] = parse.quote(book_description['book_path'], safe='/')  # заменяем в пути пробелы
 
     Path(PAGES_DIRECTORY).mkdir(parents=True, exist_ok=True)
     books_description = list(chunked(books_description, BOOK_CARDS_PER_PAGE))
