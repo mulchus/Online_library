@@ -1,4 +1,6 @@
 import json
+import argparse
+import sys
 
 from urllib import parse
 from more_itertools import chunked
@@ -17,10 +19,22 @@ def on_reload():
         autoescape=select_autoescape(['html', 'xml'])
     )
 
-    template = env.get_template('template.html')
+    parser = argparse.ArgumentParser(description='Сайт для чтения книг, скачанных с https://tululu.org/.')
+    parser.add_argument(
+        '--json_path',
+        nargs='?',
+        type=Path,
+        default='media/about_books.json',
+        help='путь и имя файла о книгах .json'
+    )
+    parser_args = parser.parse_args()
+    try:
+        with open(parser_args.json_path, 'r', encoding='utf-8') as json_file:
+            books = json.load(json_file)
+    except FileNotFoundError as error:
+        sys.exit(f'Неверно указан путь или имя файлаю Ошибка {error}')
 
-    with open(Path('media').joinpath('about_books.json'), 'r', encoding='utf-8') as json_file:
-        books = json.load(json_file)
+    template = env.get_template('template.html')
 
     for book in books:
         book['book_path'] = parse.quote(book['book_path'], safe='/')  # заменяем в пути пробелы
