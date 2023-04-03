@@ -38,23 +38,23 @@
         </ul>
       </nav>
       <div class="row">
-        {% for book in books %}
+        {% for book_description in books_description %}
         <div class="w-50">
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
               <div class="col-md-4">
-                <img src="../media/{{book['img_scr']}}" class="card-img" alt="{{book['titles']}}">
+                <img src="../media/{{book_description['img_scr']}}" class="card-img" alt="{{book_description['titles']}}">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h3 class="card-title">{{book['title']}}</h3>
-                  <h5 class="card-text">{{book['author']}}</h5>
+                  <h3 class="card-title">{{book_description['title']}}</h3>
+                  <h5 class="card-text">{{book_description['author']}}</h5>
                   <h5>
-                    {% for genre in book['genres'] %}
+                    {% for genre in book_description['genres'] %}
                     <span class="badge badge-light">{{genre}}</span>
                     {% endfor %}
                   </h5>
-                  <a href="../media/{{book['book_path']}}" target="_blank" class="h4" rel="noopener noreferrer">Читать</a>
+                  <a href="../media/{{book_description['book_path']}}" target="_blank" class="h4" rel="noopener noreferrer">Читать</a>
                 </div>
               </div>
             </div>

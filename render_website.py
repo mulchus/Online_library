@@ -30,24 +30,24 @@ def on_reload():
     parser_args = parser.parse_args()
     try:
         with open(parser_args.json_path, 'r', encoding='utf-8') as json_file:
-            books = json.load(json_file)
+            books_description = json.load(json_file)
     except FileNotFoundError as error:
         sys.exit(f'Неверно указан путь или имя файлаю Ошибка {error}')
 
     template = env.get_template('template.html')
 
-    for book in books:
-        book['book_path'] = parse.quote(book['book_path'], safe='/')  # заменяем в пути пробелы
+    for book_description in books_description:
+        book_description['book_path'] = parse.quote(book_description['book_path'], safe='/')  # заменяем в пути пробелы
 
     Path(PAGES_DIRECTORY).mkdir(parents=True, exist_ok=True)
-    books = list(chunked(books, BOOK_CARDS_PER_PAGE))
-    for page_number, books_page in enumerate(books):
+    books_description = list(chunked(books_description, BOOK_CARDS_PER_PAGE))
+    for page_number, books_page in enumerate(books_description):
         rendered_page = template.render(
-            books=books[page_number],
-            pages_number=len(books),
+            books_description=books_description[page_number],
+            pages_number=len(books_description),
             page_number=page_number
         )
-        with open(Path(PAGES_DIRECTORY).joinpath(f'index{page_number+1}.html'), 'w', encoding="utf8") as file:
+        with open(Path(PAGES_DIRECTORY).joinpath(f'index{page_number+1}.html'), 'w', encoding='utf8') as file:
             file.write(rendered_page)
 
 
