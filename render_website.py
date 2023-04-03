@@ -9,7 +9,6 @@ from livereload import Server
 
 
 PAGES_DIRECTORY = 'pages'
-BOOK_CARDS_PER_PAGE = 40
 
 
 def on_reload():
@@ -26,6 +25,13 @@ def on_reload():
         default='media/about_books.json',
         help='путь и имя файла о книгах .json'
     )
+    parser.add_argument(
+        '--books',
+        nargs='?',
+        type=int,
+        default=40,
+        help='количество книг на страницe'
+    )
     parser_args = parser.parse_args()
     try:
         with open(parser_args.json_path, 'r', encoding='utf-8') as json_file:
@@ -36,7 +42,7 @@ def on_reload():
     template = env.get_template('template.html')
 
     Path(PAGES_DIRECTORY).mkdir(parents=True, exist_ok=True)
-    books_description = list(chunked(books_description, BOOK_CARDS_PER_PAGE))
+    books_description = list(chunked(books_description, parser_args.books))
     for page_number, books_page in enumerate(books_description):
         rendered_page = template.render(
             books_description=books_description[page_number],
