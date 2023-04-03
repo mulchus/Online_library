@@ -16,7 +16,7 @@
       <nav aria-label="Page navigation example">
         <ul class="pagination mt-3">
           {% if not page_number %}
-            <li class="page-item"><a class="page-link disabled" href="javascript:void(0);">Назад</a></li>
+            <li class="page-item" style="pointer-events:none; opacity:0.6;"><a class="page-link">Назад</a></li>
           {% else %}
             <li class="page-item"><a class="page-link" href="index{{page_number}}.html">Назад</a></li>
           {% endif %}
@@ -29,7 +29,7 @@
             {% endif %}
           {% endfor %}
           {% if page_number+1 == pages_number %}
-            <li class="page-item"><a class="page-link" href="javascript:void(0);">Вперёд</a></li>
+            <li class="page-item" style="pointer-events:none; opacity:0.6;"><a class="page-link">Вперёд</a></li>
           {% else %}
             <li class="page-item"><a class="page-link" href="index{{page_number+2}}.html">Вперёд</a></li>
           {% endif %}
