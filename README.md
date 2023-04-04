@@ -6,11 +6,15 @@
 
 Сайт расположен на GitHub Pages по адресу [https://mulchus.github.io/Online_library/](https://mulchus.github.io/Online_library/)
 
-Для локального запуска сайта у вас уже должен быть установлен Python 3.
+- скачайте код.
 
-- Скачайте код
-- Установите зависимости командой `pip install -r requirements.txt`
-- Запустите скрипт командой `python render_website.py [--json_path] [--books]`, где
+Для локального просмотра сайта, ранее записанного на ваш диск, необходимо открыть двойным нажатием мыши файл index.html,
+ расположенный в основной папке сайта. 
+
+Для локального запуска непосредственно сайта у вас уже должен быть установлен Python 3.
+
+- установите зависимости командой `pip install -r requirements.txt`
+- запустите скрипт командой `python render_website.py [--json_path] [--books]`, где
 
 --json_path - относительный путь к файлу о книгах .json (по умолчанию - `media/about_books.json`)
 
